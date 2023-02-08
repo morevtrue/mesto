@@ -101,17 +101,18 @@
       © 2023 Mesto Russia
     </p>
   </footer>
-  <section class="popup">
-    <div class="popup__container">
+  <section class="popup" aria-label="всплывающее окно редактирования профиля">
+    <article class="popup__container">
       <button class="popup__close-button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <div class="popup__input">
-        <input type="text" placeholder="Жак-Ив Кусто" class="popup__text">
-        <input type="text" placeholder="Исследователь океана" class="popup__text">
-        <button class="popup__submit-button">Сохранить</button>
-      </div>
-    </div>
+      <form action="html/sendform" method="post" class="popup__form">
+        <input type="text" value="Жак-Ив Кусто" class="popup__text popup__text_input_name">
+        <input type="text" value="Исследователь океана" class="popup__text popup__text_input_job">
+        <button type="submit" class="popup__submit-button">Сохранить</button>
+        </а>
+    </article>
   </section>
+  <script src="scripts/script.js"></script>
 </body>
 
 </html>
