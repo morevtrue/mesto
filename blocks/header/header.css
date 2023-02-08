@@ -2,6 +2,20 @@
   width: 100%;
   max-width: 880px;
   min-height: 73px;
-  margin: 45px auto 0;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
+  margin: 0 auto;
+}
+
+@media (max-width: 925px) {
+  .header {
+    max-width: 90.3vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    max-width: 100vw;
+    min-width: 282px;
+    margin: 0;
+  }
 }

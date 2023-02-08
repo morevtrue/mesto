@@ -2,8 +2,13 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
   width: 100%;
   max-width: 486px;
   gap: 23px;
+}
+
+@media (max-width: 767px) {
+  .profile__card {
+    flex-direction: column;
+  }
 }

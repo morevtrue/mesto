@@ -5,3 +5,10 @@
   height: 24px;
   margin-top: 6px;
 }
+
+@media (max-width: 767px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+  }
+}

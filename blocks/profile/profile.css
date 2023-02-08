@@ -6,3 +6,18 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media (max-width: 925px) {
+  .profile {
+    max-width: 90.3vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .profile {
+    max-width: 88.125vw;
+    flex-direction: column;
+    margin: 38.25px auto 36px;
+    min-width: 282px;
+  }
+}
