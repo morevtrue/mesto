@@ -4,6 +4,8 @@
   background: url(../../../images/add-button.svg) no-repeat center;
   border: 2px solid rgba(255, 255, 255, 1);
   border-radius: 2px;
+  opacity: 1;
+  transition: opacity .5s linear;
 }
 
 @media (max-width: 767px) {
@@ -13,4 +15,8 @@
     min-width: 282px;
     margin: 36px auto 0;
   }
+}
+
+.profile__add-button:hover {
+  opacity: .6;
 }

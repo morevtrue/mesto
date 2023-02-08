@@ -4,6 +4,8 @@
   width: 24px;
   height: 24px;
   margin-top: 6px;
+  opacity: 1;
+  transition: opacity .5s linear;
 }
 
 @media (max-width: 767px) {
@@ -11,4 +13,8 @@
     width: 18px;
     height: 18px;
   }
+}
+
+.profile__edit-button:hover {
+  opacity: .6;
 }

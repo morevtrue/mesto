@@ -4,4 +4,10 @@
   height: 19px;
   border: none;
   margin-right: 20px;
+  opacity: 1;
+  transition: opacity .5s linear;
+}
+
+.card__like:hover {
+  opacity: .5;
 }
