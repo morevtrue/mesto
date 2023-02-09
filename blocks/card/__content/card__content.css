@@ -4,7 +4,7 @@
   padding: 0;
   display: flex;
   justify-content: space-between;
-  min-height: 79px;
+  min-height: 76px;
   align-items: center;
   border-radius: 0 0 10px 10px;
 }

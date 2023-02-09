@@ -1,5 +1,5 @@
 .profile {
-  margin: 36.25px auto 47.25px;
+  margin: 40px auto 51px;
   width: 100%;
   max-width: 880px;
   display: flex;
@@ -17,7 +17,7 @@
   .profile {
     max-width: 88.125vw;
     flex-direction: column;
-    margin: 38.25px auto 36px;
+    margin: 42px auto 36px;
     min-width: 282px;
   }
 }
