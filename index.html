@@ -25,75 +25,53 @@
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
       </div>
-      <button class="profile__add-button"></button>
+      <button class="profile__add-button" type="button"></button>
     </section>
     <section class="cards" aria-label="подборка фотографий интересных мест мира">
-      <article class="card" aria-label="карточка с фотографией и названием места">
-        <img src="images/karachaevsk.jpg" alt="фотография старинной церкви на фоне гор" class="card__image">
-        <ul class="card__content">
-          <li>
-            <p class="card__text">Карачаево-Черкессия</p>
-          </li>
-          <li>
-            <button class="card__like"></button>
-          </li>
-        </ul>
-      </article>
-      <article class="card" aria-label="карточка с фотографией и названием места">
-        <img src="images/elbrus.jpg" alt="фотография пейзажа с горой эльбрус вдалеке" class="card__image">
-        <ul class="card__content">
-          <li>
-            <p class="card__text">Гора Эльбрус</p>
-          </li>
-          <li>
-            <button class="card__like"></button>
-          </li>
-        </ul>
-      </article>
-      <article class="card" aria-label="карточка с фотографией и названием места">
-        <img src="images/dombay.jpg" alt="фотография горы домбай" class="card__image">
-        <ul class="card__content">
-          <li>
-            <p class="card__text">Домбай</p>
-          </li>
-          <li>
-            <button class="card__like"></button>
-          </li>
-        </ul>
-      </article>
-      <article class="card" aria-label="карточка с фотографией и названием места">
-        <img src="images/canada.jpg" alt="фотография озера на фоне гор в канаде" class="card__image">
-        <ul class="card__content">
-          <li>
-            <p class="card__text">Канада</p>
-          </li>
-          <li>
-            <button class="card__like"></button>
-          </li>
-        </ul>
-      </article>
-      <article class="card" aria-label="карточка с фотографией и названием места">
-        <img src="images/tibet.jpg" alt="фотография тибета в китае" class="card__image">
-        <ul class="card__content">
-          <li>
-            <p class="card__text">Тибет</p>
-          </li>
-          <li>
-            <button class="card__like"></button>
-          </li>
-        </ul>
-      </article>
-      <article class="card" aria-label="карточка с фотографией и названием места">
-        <img src="images/switzerland.jpg" alt="фотография швейцарских гор" class="card__image">
-        <ul class="card__content">
-          <li>
-            <p class="card__text">Швейцария</p>
-          </li>
-          <li>
-            <button class="card__like"></button>
-          </li>
-        </ul>
-      </article>
+      <ul class="cards__list">
+        <li class="card">
+          <img src="images/karachaevsk.jpg" alt="фотография старинной церкви на фоне гор" class="card__image">
+          <div class="card__content">
+            <h2 class="card__text">Карачаево-Черкессия</h2>
+            <button class="card__like" type="button"></button>
+          </div>
+        </li>
+        <li class="card">
+          <img src="images/elbrus.jpg" alt="фотография пейзажа с горой эльбрус вдалеке" class="card__image">
+          <div class="card__content">
+            <h2 class="card__text">Гора Эльбрус</h2>
+            <button class="card__like" type="button"></button>
+          </div>
+        </li>
+        <li class="card">
+          <img src="images/dombay.jpg" alt="фотография горы домбай" class="card__image">
+          <div class="card__content">
+            <h2 class="card__text">Домбай</h2>
+            <button class="card__like" type="button"></button>
+          </div>
+        </li>
+        <li class="card">
+          <img src="images/canada.jpg" alt="фотография озера на фоне гор в канаде" class="card__image">
+          <div class="card__content">
+            <h2 class="card__text">Канада</h2>
+            <button class="card__like" type="button"></button>
+          </div>
+        </li>
+        <li class="card">
+          <img src="images/tibet.jpg" alt="фотография тибета в китае" class="card__image">
+          <div class="card__content">
+            <h2 class="card__text">Тибет</h2>
+            <button class="card__like" type="button"></button>
+          </div>
+        </li>
+        <li class="card">
+          <img src="images/switzerland.jpg" alt="фотография швейцарских гор" class="card__image">
+          <div class="card__content">
+            <h2 class="card__text">Швейцария</h2>
+            <button class="card__like" type="button"></button>
+          </div>
+        </li>
+      </ul>
     </section>
   </main>
   <footer class="footer">
@@ -101,18 +79,18 @@
       © 2023 Mesto Russia
     </p>
   </footer>
-  <section class="popup" aria-label="всплывающее окно редактирования профиля">
-    <article class="popup__container">
-      <button class="popup__close-button"></button>
+  <section class="popup">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form action="html/sendform" method="post" class="popup__form">
-        <input type="text" value="Жак-Ив Кусто" class="popup__text popup__text_input_name">
-        <input type="text" value="Исследователь океана" class="popup__text popup__text_input_job">
+      <form class="popup__form" name="popupForm">
+        <input type="text" name="popupInputName" class="popup__text popup__text_input_name">
+        <input type="text" name="popupInputJob" class="popup__text popup__text_input_job">
         <button type="submit" class="popup__submit-button">Сохранить</button>
       </form>
-    </article>
+    </div>
   </section>
-  <script src="scripts/script.js"></script>
+  <script src="scripts/index.js"></script>
 </body>
 
 </html>

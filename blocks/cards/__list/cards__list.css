@@ -1,4 +1,4 @@
-.cards {
+.cards__list {
   display: grid;
   margin: 0 auto;
   padding: 0;
@@ -8,16 +8,17 @@
   column-gap: 17px;
   row-gap: 20px;
   justify-content: center;
+  list-style-type: none;
 }
 
 @media (max-width: 925px) {
-  .cards {
+  .cards__list {
     max-width: 90.3vw;
   }
 }
 
 @media (max-width: 479px) {
-  .cards {
+  .cards__list {
     max-width: 88.125vw;
   }
 }
