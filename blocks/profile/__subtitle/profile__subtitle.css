@@ -12,5 +12,6 @@
 @media (max-width: 767px) {
   .profile__subtitle {
     font-size: 14px;
+    max-width: 200px;
   }
 }
