@@ -29,48 +29,15 @@
     </section>
     <section class="cards" aria-label="подборка фотографий интересных мест мира">
       <ul class="cards__list">
-        <li class="card">
-          <img src="images/karachaevsk.jpg" alt="фотография старинной церкви на фоне гор" class="card__image">
-          <div class="card__content">
-            <h2 class="card__text">Карачаево-Черкессия</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/elbrus.jpg" alt="фотография пейзажа с горой эльбрус вдалеке" class="card__image">
-          <div class="card__content">
-            <h2 class="card__text">Гора Эльбрус</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/dombay.jpg" alt="фотография горы домбай" class="card__image">
-          <div class="card__content">
-            <h2 class="card__text">Домбай</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/canada.jpg" alt="фотография озера на фоне гор в канаде" class="card__image">
-          <div class="card__content">
-            <h2 class="card__text">Канада</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/tibet.jpg" alt="фотография тибета в китае" class="card__image">
-          <div class="card__content">
-            <h2 class="card__text">Тибет</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/switzerland.jpg" alt="фотография швейцарских гор" class="card__image">
-          <div class="card__content">
-            <h2 class="card__text">Швейцария</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </li>
+        <template id="card">
+          <li class="card">
+            <img class="card__image">
+            <div class="card__content">
+              <h2 class="card__text"></h2>
+              <button class="card__like" type="button"></button>
+            </div>
+          </li>
+        </template>
       </ul>
     </section>
   </main>
