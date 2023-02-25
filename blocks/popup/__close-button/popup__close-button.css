@@ -10,18 +10,12 @@
   transition: opacity .5s linear;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 989px) {
   .popup__close-button {
-    top: -50px;
+    top: -36px;
     right: 0;
-  }
-}
-
-@media (max-width: 479px) {
-  .popup__close-button {
     width: 20px;
     height: 20px;
-    top: -36px;
   }
 }
 
