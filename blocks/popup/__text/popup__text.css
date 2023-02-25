@@ -8,14 +8,6 @@
   line-height: 17px;
 }
 
-.popup__text::-moz-placeholder {
-  color: #000000;
-}
-
-.popup__text::-webkit-input-placeholder {
-  color: #000000;
-}
-
 .popup__text:focus {
   outline: none;
   border-color: #000000;
