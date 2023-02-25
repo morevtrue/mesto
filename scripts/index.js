@@ -19,8 +19,6 @@ const formElementCard = popupAddCard.querySelector('.popup__form');
 const cardTemplate = document.querySelector('#card').content;
 const cardsList = document.querySelector('.cards__list');
 const cardLike = document.querySelectorAll('.card__like');
-// const cardName = cardTemplate.querySelector('.card__text');
-// const cardImage = cardTemplate.querySelector('.card__image');
 
 const initialCards = [
   {
@@ -71,11 +69,21 @@ function likeButton(currentElement) {
   })
 }
 
+// УДАЛИТЬ КАРТОЧКУ
+
+function deleteButton(currentElement) {
+  const deleteButton = currentElement.querySelector('.card__delete-button');
+  deleteButton.addEventListener('click', () => {
+    currentElement.remove();
+  })
+}
+
 // ЗАГРУЗКА ГАЛЕРЕИ ФОТОГРАФИЙ НА СТРАНИЦУ
 
-const galleryCard = initialCards.forEach(card => {
+initialCards.forEach(card => {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   likeButton(cardElement);
+  deleteButton(cardElement);
   cardElement.querySelector('.card__image').src = card.link;
   cardElement.querySelector('.card__text').textContent = card.name;
   cardsList.append(cardElement);
@@ -87,7 +95,6 @@ openPopupProfile.addEventListener('click', () => {
   openPopup(popupEditProfile);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
-  // popup.style.display = 'flex';
 });
 
 closePopup(popupEditProfile, closePopupButtonProfile);
@@ -97,7 +104,6 @@ formElementProfile.addEventListener('submit', evt => {
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
   popupEditProfile.classList.remove('popup_opened');
-  // popup.style.display = 'none';
 });
 
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ
@@ -112,6 +118,7 @@ formElementCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   likeButton(cardElement);
+  deleteButton(cardElement);
   cardElement.querySelector('.card__text').textContent = namePlaceInput.value;
   cardElement.querySelector('.card__image').src = srcImageInput.value;
   cardsList.prepend(cardElement);
