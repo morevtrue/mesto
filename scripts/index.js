@@ -3,6 +3,8 @@ const openPopupProfile = profile.querySelector('.profile__edit-button');
 const openPopupAddCard = profile.querySelector('.profile__add-button')
 const profileTitle = profile.querySelector('.profile__title');
 const profileSubtitle = profile.querySelector('.profile__subtitle');
+const cardsList = document.querySelector('.cards__list');
+const cardLike = document.querySelectorAll('.card__like');
 // ПОПАП ПРОФИЛЬ-----------------------------------------
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const closePopupButtonProfile = popupEditProfile.querySelector('.popup__close-button');
@@ -20,11 +22,10 @@ const popupViewPhoto = document.querySelector('.popup_open_image');
 const popupImageText = popupViewPhoto.querySelector('.popup__image-text');
 const popupImage = popupViewPhoto.querySelector('.popup__image');
 const closePopupButtonViewPhoto = popupViewPhoto.querySelector('.popup__close-button');
-//---------------------------------------------------------
+//РАБОТА С ЭЛЕМЕНТОМ TEMPLATE--------------------------------
 const cardTemplate = document.querySelector('#card').content;
-const cardsList = document.querySelector('.cards__list');
-const cardLike = document.querySelectorAll('.card__like');
 
+//МАССИВ ИЗНАЧАЛЬНЫХ ФОТОГРАФИЙ
 const initialCards = [
   {
     name: 'Архыз',
@@ -52,42 +53,61 @@ const initialCards = [
   }
 ];
 
+// СОБЫТИЕ ОБРАБОТКИ КЛИКА ОТКРЫТИЯ ПОПАПА
+function openPopupEvent(currentButton, currentClick) {
+  currentButton.addEventListener('click', currentClick);
+};
+
 // ОТКРЫТЬ ПОПАП---------------------------------------
 function openPopup(currentPopup) {
   currentPopup.classList.add('popup_opened');
 };
-// ЗАКРЫТЬ ПОПАП---------------------------------------
 
-function closePopup(currentPopup, closePopupButton) {
-  closePopupButton.addEventListener('click', () => {
-    currentPopup.classList.remove('popup_opened');
-  });
-}
+// ЗАКРЫТЬ ПОПАП---------------------------------------
+function closePopup(closePopupButton) {
+  closePopupButton.addEventListener('click', clickPopupClose);
+};
+
+function clickPopupClose(evt) {
+  evt.target.closest('.popup').classList.remove('popup_opened');
+};
+
 // ЛАЙКНУТЬ КАРТОЧКУ----------------------------------
 function likeButton(currentElement) {
-  currentElement.querySelector('.card__like').addEventListener('click', evt => {
-    evt.target.classList.toggle('card__like_active');
-  })
-}
+  const cardLike = currentElement.querySelector('.card__like');
+  cardLike.addEventListener('click', clickLikeButton);
+};
+
+function clickLikeButton(evt) {
+  evt.target.classList.toggle('card__like_active');
+};
+
 // УДАЛИТЬ КАРТОЧКУ-----------------------------------
+const clickDeleteButton = (evt) => {
+  evt.target.closest('.card').remove();
+};
+
 function deleteButton(currentElement) {
   const deleteButton = currentElement.querySelector('.card__delete-button');
-  deleteButton.addEventListener('click', () => {
-    currentElement.remove();
-  })
-}
+  deleteButton.addEventListener('click', clickDeleteButton);
+};
+
 // ПОПАП ПОСМОТРЕТЬ ФОТО------------------------------
+const clickPopupPhoto = (evt) => {
+  openPopup(popupViewPhoto);
+  popupImage.src = evt.target.src;
+  popupImageText.textContent = evt.target.closest('.card').textContent;
+};
+
 function openPopupViewPhoto(currentElement) {
   const cardImage = currentElement.querySelector('.card__image');
-  const cardText = currentElement.querySelector('.card__text');
-  cardImage.addEventListener('click', () => {
-    openPopup(popupViewPhoto);
-    popupImage.src = cardImage.src;
-    popupImageText.textContent = cardText.textContent;
-  });
-}
+  openPopupEvent(cardImage, clickPopupPhoto);
+};
+
+closePopup(closePopupButtonViewPhoto);
+
 // ЗАГРУЗКА ГАЛЕРЕИ ФОТОГРАФИЙ НА СТРАНИЦУ------------
-initialCards.forEach(card => {
+const generateCard = (card) => {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   likeButton(cardElement);
   deleteButton(cardElement);
@@ -95,30 +115,44 @@ initialCards.forEach(card => {
   cardElement.querySelector('.card__image').src = card.link;
   cardElement.querySelector('.card__text').textContent = card.name;
   cardsList.append(cardElement);
-});
+};
+
+initialCards.forEach(generateCard);
+
 // ПОПАП ПРОФИЛЬ-------------------------------------
-openPopupProfile.addEventListener('click', () => {
+const clickPopupProfile = () => {
   openPopup(popupEditProfile);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
-});
+};
 
-closePopup(popupEditProfile, closePopupButtonProfile);
+openPopupEvent(openPopupProfile, clickPopupProfile);
 
-formElementProfile.addEventListener('submit', evt => {
+const submitFormProfile = (evt) => {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
   popupEditProfile.classList.remove('popup_opened');
-});
+};
+
+formElementProfile.addEventListener('submit', submitFormProfile);
+
+// openPopupProfile.addEventListener('click', clickPopupProfile);
+
+closePopup(closePopupButtonProfile);
+
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
-openPopupAddCard.addEventListener('click', () => {
+const clickPopupAddCard = () => {
   openPopup(popupAddCard);
-});
+};
 
-closePopup(popupAddCard, closePopupButtonAddCard);
+openPopupEvent(openPopupAddCard, clickPopupAddCard);
 
-formElementCard.addEventListener('submit', (evt) => {
+// openPopupAddCard.addEventListener('click', clickPopupAddCard);
+
+formElementCard.addEventListener('submit', submitFormAddCard);
+
+function submitFormAddCard(evt) {
   evt.preventDefault();
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   likeButton(cardElement);
@@ -130,11 +164,6 @@ formElementCard.addEventListener('submit', (evt) => {
   popupAddCard.classList.remove('popup_opened');
   namePlaceInput.value = '';
   srcImageInput.value = '';
-});
-// ЗАКРЫТЬ ПОПАП ПРОСМОТРА ФОТОГРАФИИ-----------------
-closePopup(popupViewPhoto, closePopupButtonViewPhoto);
+};
 
-
-
-
-
+closePopup(closePopupButtonAddCard);
