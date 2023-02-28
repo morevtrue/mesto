@@ -5,6 +5,7 @@ const profileTitle = profile.querySelector('.profile__title');
 const profileSubtitle = profile.querySelector('.profile__subtitle');
 const cardsList = document.querySelector('.cards__list');
 const cardLike = document.querySelectorAll('.card__like');
+const closeButtons = document.querySelectorAll('.popup__close-button');
 // ПОПАП ПРОФИЛЬ-----------------------------------------
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const closePopupButtonProfile = popupEditProfile.querySelector('.popup__close-button');
@@ -72,6 +73,12 @@ function clickPopupClose(evt) {
   evt.target.closest('.popup').classList.remove('popup_opened');
 };
 
+const closeButton = (button) => {
+  closePopup(button);
+};
+
+closeButtons.forEach(closeButton);
+
 // ЛАЙКНУТЬ КАРТОЧКУ----------------------------------
 function likeButton(currentElement) {
   const cardLike = currentElement.querySelector('.card__like');
@@ -92,11 +99,25 @@ function deleteButton(currentElement) {
   deleteButton.addEventListener('click', clickDeleteButton);
 };
 
+// СОЗДАТЬ КАРТОЧКУ-----------------------------------
+
+function createCard(link, name) {
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  likeButton(cardElement);
+  deleteButton(cardElement);
+  openPopupViewPhoto(cardElement);
+  cardElement.querySelector('.card__image').src = link;
+  cardElement.querySelector('.card__image').alt = name;
+  cardElement.querySelector('.card__text').textContent = name;
+  return cardElement;
+};
+
 // ПОПАП ПОСМОТРЕТЬ ФОТО------------------------------
 const clickPopupPhoto = (evt) => {
   openPopup(popupViewPhoto);
   popupImage.src = evt.target.src;
-  popupImageText.textContent = evt.target.closest('.card').textContent;
+  popupImageText.textContent = evt.target.closest('.card').querySelector('.card__text').textContent;
+  popupImage.alt = popupImageText.textContent;
 };
 
 function openPopupViewPhoto(currentElement) {
@@ -104,20 +125,13 @@ function openPopupViewPhoto(currentElement) {
   openPopupEvent(cardImage, clickPopupPhoto);
 };
 
-closePopup(closePopupButtonViewPhoto);
-
 // ЗАГРУЗКА ГАЛЕРЕИ ФОТОГРАФИЙ НА СТРАНИЦУ------------
-const generateCard = (card) => {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  likeButton(cardElement);
-  deleteButton(cardElement);
-  openPopupViewPhoto(cardElement);
-  cardElement.querySelector('.card__image').src = card.link;
-  cardElement.querySelector('.card__text').textContent = card.name;
-  cardsList.append(cardElement);
+
+const generateCards = (card) => {
+  cardsList.append(createCard(card.link, card.name));
 };
 
-initialCards.forEach(generateCard);
+initialCards.forEach(generateCards);
 
 // ПОПАП ПРОФИЛЬ-------------------------------------
 const clickPopupProfile = () => {
@@ -132,14 +146,10 @@ const submitFormProfile = (evt) => {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
-  popupEditProfile.classList.remove('popup_opened');
+  clickPopupClose(evt);
 };
 
 formElementProfile.addEventListener('submit', submitFormProfile);
-
-// openPopupProfile.addEventListener('click', clickPopupProfile);
-
-closePopup(closePopupButtonProfile);
 
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
 const clickPopupAddCard = () => {
@@ -148,22 +158,11 @@ const clickPopupAddCard = () => {
 
 openPopupEvent(openPopupAddCard, clickPopupAddCard);
 
-// openPopupAddCard.addEventListener('click', clickPopupAddCard);
-
 formElementCard.addEventListener('submit', submitFormAddCard);
 
 function submitFormAddCard(evt) {
   evt.preventDefault();
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  likeButton(cardElement);
-  deleteButton(cardElement);
-  openPopupViewPhoto(cardElement);
-  cardElement.querySelector('.card__text').textContent = namePlaceInput.value;
-  cardElement.querySelector('.card__image').src = srcImageInput.value;
-  cardsList.prepend(cardElement);
-  popupAddCard.classList.remove('popup_opened');
-  namePlaceInput.value = '';
-  srcImageInput.value = '';
+  cardsList.prepend(createCard(srcImageInput.value, namePlaceInput.value));
+  evt.target.reset();
+  clickPopupClose(evt);
 };
-
-closePopup(closePopupButtonAddCard);
