@@ -6,6 +6,8 @@ const profileSubtitle = profile.querySelector('.profile__subtitle');
 const cardsList = document.querySelector('.cards__list');
 const cardLike = document.querySelectorAll('.card__like');
 const closeButtons = document.querySelectorAll('.popup__close-button');
+const formError = document.querySelectorAll('.popup__form-error');
+const formInput = document.querySelectorAll('.popup__form-input');
 // ПОПАП ПРОФИЛЬ-----------------------------------------
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const closePopupButtonProfile = popupEditProfile.querySelector('.popup__close-button');
@@ -69,8 +71,23 @@ function closePopup(closePopupButton) {
   closePopupButton.addEventListener('click', clickPopupClose);
 };
 
+function clearErrorSpan() {
+  formError.forEach(form => {
+    form.textContent = '';
+  })
+}
+
+function clearErrorInput() {
+  formInput.forEach(form => {
+    form.classList.remove('popup__text_type_error');
+  })
+}
+
 function clickPopupClose(evt) {
   evt.target.closest('.popup').classList.remove('popup_opened');
+  clearErrorInput();
+  clearErrorSpan();
+
 };
 
 const closeButton = (button) => {
@@ -154,6 +171,8 @@ formElementProfile.addEventListener('submit', submitFormProfile);
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
 const clickPopupAddCard = () => {
   openPopup(popupAddCard);
+  namePlaceInput.value = '';
+  srcImageInput.value = '';
 };
 
 openPopupEvent(openPopupAddCard, clickPopupAddCard);
