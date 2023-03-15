@@ -1,3 +1,5 @@
+const formError = document.querySelectorAll('.popup__form-error');
+
 const settingsValidation = {
   formSelector: '.popup__form',
   inputSelector: '.popup__form-input',

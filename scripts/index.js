@@ -1,13 +1,12 @@
 const profile = document.querySelector('.profile');
-const openPopupProfile = profile.querySelector('.profile__edit-button');
-const openPopupAddCard = profile.querySelector('.profile__add-button')
+const popupProfileButton = profile.querySelector('.profile__edit-button');
+const popupAddCardButton = profile.querySelector('.profile__add-button')
 const profileTitle = profile.querySelector('.profile__title');
 const profileSubtitle = profile.querySelector('.profile__subtitle');
 const cardsList = document.querySelector('.cards__list');
-const closeButtons = document.querySelectorAll('.popup__close-button');
-const formError = document.querySelectorAll('.popup__form-error');
-const formInput = document.querySelectorAll('.popup__form-input');
+const buttonClose = document.querySelectorAll('.popup__close-button');
 const popup = document.querySelectorAll('.popup');
+const formInputList = document.querySelectorAll('.popup__form-input');
 // ПОПАП ПРОФИЛЬ-----------------------------------------
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const formElementProfile = popupEditProfile.querySelector('.popup__form');
@@ -82,7 +81,7 @@ const closeButton = (button) => {
   closePopup(button);
 };
 
-closeButtons.forEach(closeButton);
+buttonClose.forEach(closeButton);
 
 // ----закрыть кликом на оверлей----
 const closePopupClickOverlay = (popup) => {
@@ -120,7 +119,7 @@ function clearErrorSpan() {
 };
 
 function clearErrorInput() {
-  formInput.forEach(form => {
+  formInputList.forEach(form => {
     form.classList.remove('popup__text_type_error');
   });
 };
@@ -204,7 +203,7 @@ const clickPopupProfile = () => {
   jobInput.value = profileSubtitle.textContent;
 };
 
-openPopupEvent(openPopupProfile, clickPopupProfile);
+openPopupEvent(popupProfileButton, clickPopupProfile);
 
 const submitFormProfile = (evt) => {
   evt.preventDefault();
@@ -222,7 +221,7 @@ const clickPopupAddCard = () => {
   srcImageInput.value = '';
 };
 
-openPopupEvent(openPopupAddCard, clickPopupAddCard);
+openPopupEvent(popupAddCardButton, clickPopupAddCard);
 
 formElementCard.addEventListener('submit', submitFormAddCard);
 
