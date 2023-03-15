@@ -4,17 +4,17 @@ const openPopupAddCard = profile.querySelector('.profile__add-button')
 const profileTitle = profile.querySelector('.profile__title');
 const profileSubtitle = profile.querySelector('.profile__subtitle');
 const cardsList = document.querySelector('.cards__list');
-const cardLike = document.querySelectorAll('.card__like');
 const closeButtons = document.querySelectorAll('.popup__close-button');
+const formError = document.querySelectorAll('.popup__form-error');
+const formInput = document.querySelectorAll('.popup__form-input');
+const popup = document.querySelectorAll('.popup');
 // ПОПАП ПРОФИЛЬ-----------------------------------------
 const popupEditProfile = document.querySelector('.popup_edit_profile');
-const closePopupButtonProfile = popupEditProfile.querySelector('.popup__close-button');
 const formElementProfile = popupEditProfile.querySelector('.popup__form');
 const nameInput = popupEditProfile.querySelector('.popup__text_input_name');
 const jobInput = popupEditProfile.querySelector('.popup__text_input_job');
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------------
 const popupAddCard = document.querySelector('.popup_add_card');
-const closePopupButtonAddCard = popupAddCard.querySelector('.popup__close-button');
 const namePlaceInput = popupAddCard.querySelector('.popup__text_input_place');
 const srcImageInput = popupAddCard.querySelector('.popup__text_input_src');
 const formElementCard = popupAddCard.querySelector('.popup__form');
@@ -22,7 +22,6 @@ const formElementCard = popupAddCard.querySelector('.popup__form');
 const popupViewPhoto = document.querySelector('.popup_open_image');
 const popupImageText = popupViewPhoto.querySelector('.popup__image-text');
 const popupImage = popupViewPhoto.querySelector('.popup__image');
-const closePopupButtonViewPhoto = popupViewPhoto.querySelector('.popup__close-button');
 //РАБОТА С ЭЛЕМЕНТОМ TEMPLATE--------------------------------
 const cardTemplate = document.querySelector('#card').content;
 
@@ -70,14 +69,79 @@ function closePopup(closePopupButton) {
 };
 
 function clickPopupClose(evt) {
-  evt.target.closest('.popup').classList.remove('popup_opened');
+  clearAllErrorAfterClose(evt.target, evt.currentTarget);
+  closeOpenPopup(evt.target.closest('.popup'));
 };
 
+const closeOpenPopup = (target) => {
+  target.classList.remove('popup_opened');
+}
+
+// ----закрыть нажатием на крестик----
 const closeButton = (button) => {
   closePopup(button);
 };
 
 closeButtons.forEach(closeButton);
+
+// ----закрыть кликом на оверлей----
+const closePopupClickOverlay = (popup) => {
+  popup.addEventListener('click', clickOverlay);
+};
+
+const clickOverlay = (evt) => {  
+  clearAllErrorAfterClose(evt.target, evt.currentTarget);
+  closeOpenPopup(evt.target);
+};
+
+popup.forEach(closePopupClickOverlay);
+
+// ----закрыть нажатием на кнопку Esc----
+const closePopupClickEscape = () => {
+  popup.forEach(popup => {
+    closeOpenPopup(popup);
+    checkAndClear(popup);
+  });
+};
+
+const clickEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopupClickEscape();
+  };
+};
+
+document.addEventListener('keydown', clickEscape);
+
+// ОЧИСТИТЬ ПОЛЯ ОШИБКИ И СДЕЛАТЬ КНОПКУ НЕКТИВНОЙ ПОСЛЕ ЗАКРЫТИЯ ПОПАПА
+function clearErrorSpan() {
+  formError.forEach(form => {
+    form.textContent = '';
+  });
+};
+
+function clearErrorInput() {
+  formInput.forEach(form => {
+    form.classList.remove('popup__text_type_error');
+  });
+};
+
+const checkSubmitButton = (target) => {
+  if (target.querySelector('.popup__submit-button')) {
+    target.querySelector('.popup__submit-button').classList.add('popup__submit-button_inactive');
+  };
+};
+
+const checkAndClear = (target) => {
+  clearErrorInput();
+  clearErrorSpan();
+  checkSubmitButton(target);
+};
+
+function clearAllErrorAfterClose(evtTarget, evtCurrentTarget) {
+  if (evtTarget === evtCurrentTarget) {
+    checkAndClear(evtTarget.closest('.popup'));
+  };
+};
 
 // ЛАЙКНУТЬ КАРТОЧКУ----------------------------------
 function likeButton(currentElement) {
@@ -154,6 +218,8 @@ formElementProfile.addEventListener('submit', submitFormProfile);
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
 const clickPopupAddCard = () => {
   openPopup(popupAddCard);
+  namePlaceInput.value = '';
+  srcImageInput.value = '';
 };
 
 openPopupEvent(openPopupAddCard, clickPopupAddCard);
