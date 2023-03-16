@@ -1,5 +1,3 @@
-const formError = document.querySelectorAll('.popup__form-error');
-
 const settingsValidation = {
   formSelector: '.popup__form',
   inputSelector: '.popup__form-input',
@@ -63,9 +61,6 @@ const setEventListeners = (formElement, obj) => {
 const enableValidation = (obj) => {
   const formList = Array.from(document.querySelectorAll(obj.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
     setEventListeners(formElement, obj);
   });
 }
