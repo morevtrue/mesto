@@ -27,25 +27,20 @@ const popupImage = popupViewPhoto.querySelector('.popup__image');
 const cardTemplate = document.querySelector('#card').content;
 const cardElement = cardTemplate.querySelector('.card');
 
-// СОБЫТИЕ ОБРАБОТКИ КЛИКА ОТКРЫТИЯ ПОПАПА
-function clickPopup(currentButton, currentClick) {
-  currentButton.addEventListener('click', currentClick);
-};
-
 // ОТКРЫТЬ ПОПАП---------------------------------------
-function openPopup(currentPopup) {
+const openPopup = (currentPopup) => {
   currentPopup.classList.add('popup_opened');
   document.addEventListener('keydown', processEscape);
 };
 
 // ЗАКРЫТЬ ПОПАП---------------------------------------
-function closePopup(currentPopup) {
+const closePopup = (currentPopup) => {
     currentPopup.classList.remove('popup_opened');  
     document.removeEventListener('keydown', processEscape);    
 };
 
 // ----закрыть кликом на оверлей----
-const clickOverlay = (evt) => {
+const handleClickOverlay = (evt) => {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.currentTarget);
   };
@@ -66,40 +61,37 @@ popupList.forEach(popup => {
     closePopup(popup);
   });
   popup.addEventListener('click', (evt) => {
-    clickOverlay(evt);
+    handleClickOverlay(evt);
   });
 });
 
 // ЛАЙКНУТЬ КАРТОЧКУ----------------------------------
-function handleLikeButton(evt) {
+const handleLikeCard = (evt) => {
   evt.target.classList.toggle('card__like_active');
-  evt.stopPropagation();
 };
 
 // УДАЛИТЬ КАРТОЧКУ-----------------------------------
 const handleDeleteCard = (evt) => {
   evt.target.closest('.card').remove();
-  evt.stopPropagation();
 };
 
 // СОЗДАТЬ КАРТОЧКУ-----------------------------------
-function createCard(link, name) {
+const createCard = (link, name) => {
   const clonedElement = cardElement.cloneNode(true);
   const cardImage = clonedElement.querySelector('.card__image');
-  clonedElement.querySelector('.card__like').addEventListener('click', handleLikeButton);
+  clonedElement.querySelector('.card__like').addEventListener('click', handleLikeCard);
   clonedElement.querySelector('.card__delete-button').addEventListener('click', handleDeleteCard);
-  // clickPopup(cardImage, clickPopupPhoto);
   cardImage.src = link;
   cardImage.alt = name;
   clonedElement.querySelector('.card__text').textContent = name;
-  clonedElement.addEventListener('click', () => {
-    clickPopupPhoto(link, name);
+  cardImage.addEventListener('click', () => {
+    handleClickPopupPhoto(link, name);
   });
   return clonedElement;
 };
 
 // ПОПАП ПОСМОТРЕТЬ ФОТО------------------------------
-const clickPopupPhoto = (link, name) => {
+const handleClickPopupPhoto = (link, name) => {
   openPopup(popupViewPhoto);
   popupImage.src = link;
   popupImageText.textContent = name;
@@ -114,39 +106,39 @@ const generateCards = (card) => {
 initialCards.forEach(generateCards);
 
 // ПОПАП ПРОФИЛЬ-------------------------------------
-const clickPopupProfile = () => {
+const handleClickPopupProfile = () => {
   openPopup(popupEditProfile);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
   toggleButtonState(popupProfileInputList, popupProfileSubmitButton, settingsValidation);
 };
 
-clickPopup(popupProfileButton, clickPopupProfile);
+popupProfileButton.addEventListener('click', handleClickPopupProfile);
 
-const submitFormProfile = (evt) => {
+const handleFormProfileSubmit = (evt) => {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
   closePopup(popupEditProfile);
 };
 
-formElementProfile.addEventListener('submit', submitFormProfile);
+formElementProfile.addEventListener('submit', handleFormProfileSubmit);
 
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
-const clickPopupAddCard = () => {
+const handleClickPopupAddCard = () => {
   openPopup(popupAddCard);
   namePlaceInput.value = '';
   srcImageInput.value = '';
   toggleButtonState(popupCardInputList, popupCardSubmitButton, settingsValidation);
 };
 
-clickPopup(popupAddCardButton, clickPopupAddCard);
+popupAddCardButton.addEventListener('click', handleClickPopupAddCard);
 
-formElementCard.addEventListener('submit', submitFormAddCard);
-
-function submitFormAddCard(evt) {
+const handleFormAddCardSubmit = (evt) => {
   evt.preventDefault();
   cardsList.prepend(createCard(srcImageInput.value, namePlaceInput.value));
   evt.target.reset();
   closePopup(popupAddCard);
 };
+
+formElementCard.addEventListener('submit', handleFormAddCardSubmit);
