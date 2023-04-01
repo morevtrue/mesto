@@ -101,7 +101,6 @@ const handleClickPopupAddCard = () => {
   namePlaceInput.value = '';
   srcImageInput.value = '';
   formValidators['formCard'].resetValidation();
-  console.log(formValidators['formCard']);
 };
 
 popupAddCardButton.addEventListener('click', handleClickPopupAddCard);
