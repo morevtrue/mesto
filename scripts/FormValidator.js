@@ -47,7 +47,7 @@ export class FormValidator {
   _hideInputError(inputElement) {
     inputElement.classList.remove(this._objectSettingsValidation.inputErrorClass);
 
-    this._errorElementList = this._form.querySelectorAll(`.${inputElement.id}-error`);
+    this._errorElementList = this._elementFormValidation.querySelectorAll(`.${inputElement.id}-error`);
     
     this._errorElementList.forEach(errorElement => {
       if (errorElement) {
@@ -58,7 +58,7 @@ export class FormValidator {
   }
 
   _checkInputValidity(inputElement) {
-    this._errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+    this._errorElement = this._elementFormValidation.querySelector(`.${inputElement.id}-error`);
 
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
@@ -68,8 +68,8 @@ export class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputList = Array.from(this._form.querySelectorAll(this._objectSettingsValidation.inputSelector));
-    this._buttonElement = this._form.querySelector(this._objectSettingsValidation.submitButtonSelector);
+    this._inputList = Array.from(this._elementFormValidation.querySelectorAll(this._objectSettingsValidation.inputSelector));
+    this._buttonElement = this._elementFormValidation.querySelector(this._objectSettingsValidation.submitButtonSelector);
 
     this._toggleButtonState();
 
@@ -82,7 +82,6 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._form = this._elementFormValidation;
     this._setEventListeners();
   }
 }
