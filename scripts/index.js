@@ -1,5 +1,6 @@
 import { FormValidator, settingsValidation } from './FormValidator.js';
 import { Card, initialCards } from './Card.js';
+import Section from './Section.js';
 
 const profile = document.querySelector('.profile');
 const popupProfileButton = profile.querySelector('.profile__edit-button');
@@ -61,7 +62,7 @@ popupList.forEach(popup => {
   });
 });
 
-// // ВАЛИДАЦИЯ----------------------------------------
+// ВАЛИДАЦИЯ----------------------------------------
 const formValidators = {};
 
 const enableValidation = (config) => {
@@ -101,7 +102,6 @@ const handleClickPopupAddCard = () => {
   namePlaceInput.value = '';
   srcImageInput.value = '';
   formValidators['formCard'].resetValidation();
-  console.log(formValidators['formCard']);
 };
 
 popupAddCardButton.addEventListener('click', handleClickPopupAddCard);
@@ -134,6 +134,18 @@ const createCard = (item) => {
   return cardElement;
 };
 
-initialCards.forEach(card => {
-  cardsList.append(createCard(card));
-});
+// initialCards.forEach(card => {
+//   cardsList.append(createCard(card));
+// });
+
+
+// ЗАГРУЗКА ИЗНАЧАЛЬНЫХ КАРТОЧЕК
+const cardsSection = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const cardElement = createCard(item);
+    cardsSection.addItem(cardElement);
+  },
+}, '.cards__list');
+
+cardsSection.renderItems();
