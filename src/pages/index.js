@@ -14,6 +14,7 @@ import {
   initialCards,
   settingsValidation,
 } from '../utils/constants.js';
+import './index.css';
 
 // ВАЛИДАЦИЯ----------------------------------------
 const formValidators = {};
@@ -61,7 +62,7 @@ const handleFormAddCardSubmit = (inputValues) => {
     name: inputValues[namePlaceInput.name],
     link: inputValues[srcImageInput.name],
   };
-  cardsSection.addItem(createCard(cardData));
+  cardsSection.addItemPrepend(createCard(cardData));
 };
 
 const popupFormCard = new PopupWithForm('.popup_add_card', handleFormAddCardSubmit);
