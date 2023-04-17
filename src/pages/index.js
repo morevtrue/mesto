@@ -9,8 +9,6 @@ import {
   popupAddCardButton,
   nameInput,
   jobInput,
-  namePlaceInput,
-  srcImageInput,
   initialCards,
   settingsValidation,
 } from '../utils/constants.js';
@@ -36,6 +34,7 @@ const popupWithImage = new PopupWithImage('.popup_open_image');
 
 const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
+  popupWithImage.setEventListeners();
 };
 
 // СОЗДАТЬ КАРТОЧКУ
@@ -59,8 +58,8 @@ cardsSection.renderItems();
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
 const handleFormAddCardSubmit = (inputValues) => {
   const cardData = {
-    name: inputValues[namePlaceInput.name],
-    link: inputValues[srcImageInput.name],
+    name: inputValues['popupInputPlace'],
+    link: inputValues['popupInputSrc'],
   };
   cardsSection.addItemPrepend(createCard(cardData));
 };
@@ -69,6 +68,7 @@ const popupFormCard = new PopupWithForm('.popup_add_card', handleFormAddCardSubm
 
 const handleClickPopupAddCard = () => {
   popupFormCard.open();
+  popupFormCard.setEventListeners();
   formValidators['formCard'].resetValidation();
 };
 
@@ -82,8 +82,8 @@ const profileInfo = new UserInfo({
 
 const handleFormProfileSubmit = (inputValues) => {
   profileInfo.setUserInfo({
-    name: inputValues[nameInput.name],
-    job: inputValues[jobInput.name],
+    name: inputValues['popupInputName'],
+    job: inputValues['popupInputJob'],
   })
 };
 
@@ -91,6 +91,7 @@ const popupFormProfile = new PopupWithForm('.popup_edit_profile', handleFormProf
 
 const handleClickPopupProfile = () => {
   popupFormProfile.open();
+  popupFormProfile.setEventListeners();
   const { profileName: name, profileJob: job } = profileInfo.getUserInfo();
   nameInput.value = name;
   jobInput.value = job;
