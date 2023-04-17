@@ -7,8 +7,6 @@ export const nameInput = popupEditProfile.querySelector('.popup__text_input_name
 export const jobInput = popupEditProfile.querySelector('.popup__text_input_job');
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------------
 export const popupAddCard = document.querySelector('.popup_add_card');
-export const namePlaceInput = popupAddCard.querySelector('.popup__text_input_place');
-export const srcImageInput = popupAddCard.querySelector('.popup__text_input_src');
 
 export const settingsValidation = {
   formSelector: '.popup__form',
