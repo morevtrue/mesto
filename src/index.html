@@ -15,13 +15,16 @@
   <main class="content">
     <section class="profile">
       <div class="profile__card">
-        <img src="<%=require('./images/avatar.png')%>" alt="фотография профиля" class="profile__avatar">
+        <div class="profile__place-avatar">
+          <img alt="фотография профиля" class="profile__avatar">
+          <button class="profile__avatar-button" type="button"></button>
+        </div>
         <div class="profile__info">
           <div class="profile__content">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <h1 class="profile__title"></h1>
             <button class="profile__edit-button" type="button"></button>
           </div>
-          <p class="profile__subtitle">Исследователь океана</p>
+          <p class="profile__subtitle"></p>
         </div>
       </div>
       <button class="profile__add-button" type="button"></button>
@@ -31,10 +34,13 @@
         <template id="card">
           <li class="card">
             <img class="card__image">
-            <button class="card__delete-button" type="button"></button>
+            <button class="card__delete-button card__delete-button_disabled" type="button"></button>
             <div class="card__content">
               <h2 class="card__text"></h2>
-              <button class="card__like" type="button"></button>
+              <div class="card__place-like">
+                <button class="card__like" type="button"></button>
+                <p class="card__like-counter">0</p>
+              </div>
             </div>
           </li>
         </template>
@@ -85,7 +91,27 @@
       </figure>
     </div>
   </section>
-  <!-- <script type="module" src="pages/index.js">git</script> -->
+  <section class="popup popup_delete_confirm">
+    <div class="popup__container popup__container_type_confirm">
+      <button class="popup__close-button" type="button"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <form class="popup__form">
+        <button type="submit" class="popup__submit-button popup__submit-button_type_confirm">Да</button>
+      </form>
+    </div>
+  </section>
+  <section class="popup popup_change_avatar">
+    <div class="popup__container popup__container_type_avatar">
+      <button class="popup__close-button" type="button"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__form" name="formAvatar" novalidate>
+        <input type="url" name="popupInputAvatar" class="popup__form-input popup__text popup__text_input_avatar"
+          id="popup-input-avatar" placeholder="Ссылка на картинку" required>
+        <span class="popup__form-error popup-input-avatar-error"></span>
+        <button type="submit" class="popup__submit-button">Сохранить</button>
+      </form>
+    </div>
+    <!-- <script type="module" src="pages/index.js">git</script> -->
 </body>
 
 </html>
