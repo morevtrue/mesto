@@ -9,6 +9,7 @@
   width: 100%;
   opacity: 1;
   transition: opacity .5s linear;
+  outline: none;
 }
 
 .card__delete-button:hover {
