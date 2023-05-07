@@ -55,22 +55,48 @@ const popupWithImage = new PopupWithImage('.popup_open_image');
 
 const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
-  popupWithImage.setEventListeners();
 };
 
 // СОЗДАТЬ КАРТОЧКУ--------------------------------
 const createCard = (item) => {
-  const cardNew = new Card(item, '#card', handleCardClick, openPopupConfirm);
+  const cardNew = new Card(item, '#card', handleCardClick, openPopupConfirm, likeCard, dislikeCard);
   const cardElement = cardNew.generateCard();
   return cardElement;
 };
 
+// УСТАНОВКА И СНЯТИЕ ЛАЙКА------------------------
+const likeCard = (card, cardId, likeCounter) => {
+  api.addLike(cardId)
+    .then((res) => {
+      const count = res.likes.length;
+      card.like();
+      likeCounter.textContent = count;
+      return count;
+    });
+};
+
+const dislikeCard = (card, cardId, likeCounter) => {
+  api.removeLike(cardId)
+    .then((res) => {
+      const count = res.likes.length;
+      card.dislike();
+      likeCounter.textContent = count;
+      return count;
+    });
+};
+
 // ЗАГРУЗКА ИЗНАЧАЛЬНЫХ КАРТОЧЕК-------------------
 let userId;
-let cardsSection;
+
+const cardsSection = new Section({
+  renderer: (item) => {
+    const cardElement = createCard({ profileId: userId, ...item });
+    cardsSection.addItem(cardElement);
+  },
+}, '.cards__list');
 
 const renderSection = (data) => {
-  cardsSection = new Section({
+  cardsSection.renderItems({
     items: data.map((item) => ({
       name: item.name,
       link: item.link,
@@ -79,27 +105,30 @@ const renderSection = (data) => {
       isOwner: item.owner['_id'] === userId,
       likes: item.likes
     })),
-    renderer: (item) => {
-      const cardElement = createCard({ profileId: userId, ...item });
-      cardsSection.addItem(cardElement);
-    },
-  }, '.cards__list');
-
-  cardsSection.renderItems();
+  });
 };
 
-const generateCards = () => {
+// ОТОБРАЖЕНИЕ СТРАНИЦЫ---------------------------------
+Promise.all([
+  api.getProfileContent(),
   api.getInitialCards()
-    .then((data) => {
-      renderSection(data);
-    })
-    .catch((err) => console.log(err));
-};
+])
+  .then(([info, initialCards]) => {
+    userId = info['_id'];
+    profileInfo.setUserInfo({
+      name: info.name,
+      job: info.about,
+      avatar: info.avatar
+    });
+
+    renderSection(initialCards);    
+  })
+  .catch((err) => console.log(err));
 
 // ПОПАП ДОБАВИТЬ КАРТОЧКУ---------------------------
 const handleFormAddCardSubmit = (inputValues) => {
   popupFormCard.isLoading('Сохранение...')
-  return api.addNewCard({
+  api.addNewCard({
     name: inputValues['popupInputPlace'],
     link: inputValues['popupInputSrc']
   })
@@ -111,10 +140,7 @@ const handleFormAddCardSubmit = (inputValues) => {
       }));
       popupFormCard.close();
     })
-    .catch((err) => {
-      popupFormCard.isLoading();
-      console.log(err);
-    })
+    .catch((err) => console.log(err))
     .finally(() => {
       popupFormCard.isLoading();
     })
@@ -124,31 +150,17 @@ const popupFormCard = new PopupWithForm('.popup_add_card', handleFormAddCardSubm
 
 const handleClickPopupAddCard = () => {
   popupFormCard.open();
-  popupFormCard.setEventListeners();
   formValidators['formCard'].resetValidation();
 };
 
 popupAddCardButton.addEventListener('click', handleClickPopupAddCard);
 
-// ПОПАП ПРОФИЛЬ-------------------------------------
+// ПОПАП ПРОФИЛЬ-----------------------------------
 const profileInfo = new UserInfo({
   profileNameSelector: '.profile__title',
   profileJobSelector: '.profile__subtitle',
   profileAvatarSelector: '.profile__avatar'
 });
-
-api.getProfileContent()
-  .then((res) => {
-    userId = res['_id'];
-    generateCards();
-    profileInfo.setUserInfo({
-      name: res.name,
-      job: res.about,
-      avatar: res.avatar
-    })
-    return res;
-  })
-  .catch((err) => console.log(err));
 
 const handleFormProfileSubmit = (inputValues) => {
   popupFormProfile.isLoading('Сохранение...');
@@ -174,7 +186,6 @@ const popupFormProfile = new PopupWithForm('.popup_edit_profile', handleFormProf
 
 const handleClickPopupProfile = () => {
   popupFormProfile.open();
-  popupFormProfile.setEventListeners();
   const { profileName: name, profileJob: job } = profileInfo.getUserInfo();
   nameInput.value = name;
   jobInput.value = job;
@@ -186,28 +197,23 @@ popupProfileButton.addEventListener('click', handleClickPopupProfile);
 //ПОПАП ИЗМЕНИТЬ АВАТАР---------------------------
 const handleFormAvatarSubmit = (inputValues) => {
   popupAvatar.isLoading('Сохранение...');
-  return api.submitEditAvatar({
+  api.submitEditAvatar({
     avatar: inputValues[popupInputAvatar.name]
   })
     .then((data) => {
       profileInfo.changeAvatar(data.avatar);
       popupAvatar.close();
     })
-    .catch((err) => {
-      popupAvatar.isLoading();
-      console.log(err)
-    })
+    .catch((err) => console.log(err))
     .finally(() => {
       popupAvatar.isLoading();
     })
-}
+};
 
 const popupAvatar = new PopupWithForm('.popup_change_avatar', handleFormAvatarSubmit);
 
-
 const handleClickPopupAvatar = () => {
   popupAvatar.open();
-  popupAvatar.setEventListeners();
   formValidators['formAvatar'].resetValidation();
 };
 

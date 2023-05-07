@@ -1,7 +1,5 @@
-import { api } from "./Api.js";
-
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, openPopupConfirm) {
+  constructor(data, templateSelector, handleCardClick, openPopupConfirm, likeCard, dislikeCard) {
     this._link = data.link;
     this._name = data.name;
     this._id = data.id;
@@ -16,6 +14,8 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._openPopupConfirm = openPopupConfirm;
+    this._likeCard = likeCard;
+    this._dislikeCard = dislikeCard;
   }
 
   _getTemplate() {
@@ -44,7 +44,7 @@ export default class Card {
     }
     
     if (this._isLike) {
-      this._likeCard();
+      this.like();
     }
 
     this._setEventListeners();
@@ -55,30 +55,18 @@ export default class Card {
   _handleLikeCard() {
     if (!this._isLike) {
       this._isLike = 1;
-      api.addLike(this._id)
-        .then((res) => {
-          const count = res.likes.length;
-          this._likeCard();
-          this._likeCounter.textContent = count;
-          return count;
-        });
+      this._likeCard(this, this._id, this._likeCounter);
     } else {
       this._isLike = 0;
-      api.removeLike(this._id)
-        .then((res) => {
-          const count = res.likes.length;
-          this._dislikeCard();
-          this._likeCounter.textContent = count;
-          return count;
-        });
+      this._dislikeCard(this, this._id, this._likeCounter);
     }  
   }
 
-  _likeCard() {
+  like() {
     this._likeButton.classList.add('card__like_active');
   }
 
-  _dislikeCard() {
+  dislike() {
     this._likeButton.classList.remove('card__like_active');
   }
 
@@ -89,7 +77,7 @@ export default class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener('click', () => {
-      this._handleLikeCard();
+      this._handleLikeCard(this, this._isLike, this._id, this._likeCounter);
     });
 
     this._deleteButton.addEventListener('click', () => {

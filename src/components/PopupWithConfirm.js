@@ -12,7 +12,7 @@ export default class PopupWithConfirm extends PopupWithForm {
     this._handleFormDeleteSubmit(this._card, this._cardId);
   }
 
-  _setEventListeners() {
+  setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', this._handleDeleteCardSubmit);
   }
@@ -21,7 +21,6 @@ export default class PopupWithConfirm extends PopupWithForm {
     this._card = card;
     this._cardId = cardId;
     super.open();
-    this._setEventListeners();
   }
 
 }
