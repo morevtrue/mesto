@@ -54,12 +54,16 @@ export default class Card {
 
   _handleLikeCard() {
     if (!this._isLike) {
-      this._isLike = 1;
-      this._likeCard(this, this._id, this._likeCounter);
+      this._isLike = true;
+      this._likeCard(this, this._id);
     } else {
-      this._isLike = 0;
-      this._dislikeCard(this, this._id, this._likeCounter);
+      this._isLike = false;
+      this._dislikeCard(this, this._id);
     }  
+  }
+
+  changeCounter(count) {
+    this._likeCounter.textContent = count;
   }
 
   like() {
@@ -77,7 +81,7 @@ export default class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener('click', () => {
-      this._handleLikeCard(this, this._isLike, this._id, this._likeCounter);
+      this._handleLikeCard();
     });
 
     this._deleteButton.addEventListener('click', () => {

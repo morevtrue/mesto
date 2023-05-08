@@ -65,23 +65,21 @@ const createCard = (item) => {
 };
 
 // УСТАНОВКА И СНЯТИЕ ЛАЙКА------------------------
-const likeCard = (card, cardId, likeCounter) => {
+const likeCard = (card, cardId) => {
   api.addLike(cardId)
     .then((res) => {
       const count = res.likes.length;
       card.like();
-      likeCounter.textContent = count;
-      return count;
+      card.changeCounter(count);
     });
 };
 
-const dislikeCard = (card, cardId, likeCounter) => {
+const dislikeCard = (card, cardId) => {
   api.removeLike(cardId)
     .then((res) => {
       const count = res.likes.length;
       card.dislike();
-      likeCounter.textContent = count;
-      return count;
+      card.changeCounter(count);
     });
 };
 

@@ -13,8 +13,7 @@ export default class Section {
   }
 
   renderItems({ items }) {
-    this._renderedItems = items;
-    this._renderedItems.forEach(item => {
+    items.forEach(item => {
       this._renderer(item);
     });
   }
